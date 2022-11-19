@@ -1,0 +1,71 @@
+#include <iostream>
+#include <chrono>
+using namespace std;
+using namespace std::chrono;
+
+int LinearSearch(int const* arr, int size, int value) {
+    for (int i = 0; i < size; ++i) { //Первое условие в цикле
+        if (arr[i] == value) { //Второе условие для проверки значения
+            return i;
+        }
+    }
+    return -1;
+}
+
+//Функция принимает сам массив, размер этого масссива и значение, которое надо найти
+//А возвращает индекс элемента в массиве
+//Если элемент не найден, возвращает размер массива
+int SearchWithBarrier(int* arr, int size, int value) {
+    if (size != 0) {
+        int last = arr[size - 1]; //Сохраним последний элемент массива
+        arr[size - 1] = value; //Гарантируем, что value есть в массиве
+        //Есть гарантия того, что элемент есть в массиве, значит индекс можно не проверять
+        int i = 0;
+        for (i = 0; arr[i] != value; ++i) { //Одно условие в цикле
+        }
+        arr[size - 1] = last; //Восстанавливаем последний элемент
+        if (i != (size - 1) || value == last) { //Не уткнулись в барьер или последний элемент был искомым
+            return i;
+        }
+    }
+    return  -1;
+}
+
+int main() {
+    const int n = 250000; //Размерность массива
+    int arr[n];
+    for (int i = 0; i < n; i++)
+    {
+        arr[i] = rand() % n;
+        /*cout << arr[i] << "   ";*/
+    }
+    cout << endl;
+    int search = arr[n - 1]; //Проверяем худший случай, когда искомый элемент - последний
+    cout << search << endl;
+
+    auto start = system_clock::now();
+    int index1 = LinearSearch(arr, n, search);
+    auto stop = system_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    if (index1 == -1) {
+        cout << "Linear Search: not found" << endl;
+    }
+    else {
+        cout << "Linear Search: " << index1 << endl;
+    }
+    cout << "Time is " << duration.count() << " ms" << endl;
+
+    start = system_clock::now();
+    int index2 = SearchWithBarrier(arr, n, search);
+    stop = system_clock::now();
+    duration = duration_cast<microseconds>(stop - start);
+    if (index2 == -1) {
+        cout << "Linear Search With Barrier: not found" << endl;
+    }
+    else {
+        cout << "Linear Search With Barrier: " << index2 << endl;
+    }
+    cout << "Time is " << duration.count() << " ms" << endl;
+
+    return 0;
+}
