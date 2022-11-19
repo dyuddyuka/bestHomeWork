@@ -3,7 +3,7 @@
 void Eratosthenes()
 {
 	int N;
-	std::cout << "Ââåäèòå ðàçìåðíîñòü ìàññèâà" << std::endl;
+	std::cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ€Ð°Ð·Ð¼ÐµÑ€Ð½Ð¾ÑÑ‚ÑŒ Ð¼Ð°ÑÑÐ¸Ð²Ð°" << std::endl;
 	std::cin >> N;
 	bool* massiv = new bool[N];
 
@@ -21,7 +21,7 @@ void Eratosthenes()
 			}
 		j = j + 1;
 	}
-	std::cout << "Ñïèñîê ïðîñòûõ ÷èñåë: ";
+	std::cout << "Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð¿Ñ€Ð¾ÑÑ‚Ñ‹Ñ… Ñ‡Ð¸ÑÐµÐ»: ";
 	for (j = 2; j <= N; j++)
 	{
 		if (massiv[j] == true) std::cout << " " << j;
